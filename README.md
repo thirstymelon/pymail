@@ -24,5 +24,6 @@ This project is a simple script written in Python that demonstrates how to send 
 
 1. **Clone or Download the Project**:
    ```bash
-   git clone https://github.com/<your-username>/smtp-email-sender.git
-   cd smtp-email-sender
+   git clone https://github.com/thirstymelon/pymail.git
+   cd pymail
+   python3 mail.py
