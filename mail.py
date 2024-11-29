@@ -1,29 +1,35 @@
 import smtplib
 
-HOST = "smtp.gmail.com"
-PORT = 587  # Use 465 for SSL
-SUBJECT = "Test email from Python"
-TO = "xyz123@gmail.com"
-FROM = "abcd1234@gmail.com"
-PASSWORD = "abcd efgh ijkl mnop"  # Use an app-specific password if using Gmail
-TEXT = "HeH HeH HeH HeH"
+def send_email():
+    host = "smtp.gmail.com"
+    port = 587
+    from_email = input("Enter your email address: ").strip()
+    password = input("Enter your email password (or app-specific password): ").strip()
+    to_email = input("Enter recipient's email address: ").strip()
+    subject = input("Enter the email subject: ").strip()
+    text = input("Enter the email body: ").strip()
 
-BODY = "\r\n".join((
-    f"From: {FROM}",
-    f"To: {TO}",
-    f"Subject: {SUBJECT}",
-    "",
-    TEXT
-))
+    # Construct the email body
+    body = "\r\n".join((
+        f"From: {from_email}",
+        f"To: {to_email}",
+        f"Subject: {subject}",
+        "",
+        text
+    ))
 
-try:
-    # Connect to SMTP server
-    server = smtplib.SMTP(HOST, PORT)
-    server.starttls()  # Start TLS encryption
-    server.login(FROM, PASSWORD)  # Log in with your credentials
-    server.sendmail(FROM, [TO], BODY)  # Send the email
-    print("Email sent successfully!")
-except Exception as e:
-    print(f"Error: {e}")
-finally:
-    server.quit()  # Ensure the server connection is closed
+    try:
+        # Connect to the SMTP server
+        server = smtplib.SMTP(host, port)
+        if port == 587:
+            server.starttls()  # Start TLS encryption for port 587
+        server.login(from_email, password)  # Log in with credentials
+        server.sendmail(from_email, [to_email], body)  # Send the email
+        print("Email sent successfully!")
+    except Exception as e:
+        print(f"Error: {e}")
+    finally:
+        server.quit()  # Ensure the server connection is closed
+
+if __name__ == "__main__":
+    send_email()
